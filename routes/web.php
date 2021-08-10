@@ -7,6 +7,7 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\LivroController;
 use App\Http\Controllers\AutorController;
+use App\Http\Controllers\ClienteLivroController;
 
 Route::get('/', function () {
     return view('index');
@@ -34,6 +35,16 @@ Route::prefix('/cliente')->group(function () {
     Route::get('/{id}/edit', [ClienteController::class, 'edit'])->name('cliente.edit');
     Route::put('/{id}/update', [ClienteController::class, 'update'])->name('cliente.update');
     Route::post('/destroy', [ClienteController::class, 'destroy'])->name('cliente.destroy');
+});
+
+Route::prefix('/emprestimo')->group(function () {
+    Route::get('/index', [ClienteLivroController::class, 'index'])->name('emprestimo.index');
+    Route::get('/create', [ClienteLivroController::class, 'create'])->name('emprestimo.create');
+    Route::post('/store', [ClienteLivroController::class, 'store'])->name('emprestimo.store');
+    Route::get('/{id}/show', [ClienteLivroController::class, 'show'])->name('emprestimo.show');
+    Route::get('/{id}/edit', [ClienteLivroController::class, 'edit'])->name('emprestimo.edit');
+    Route::put('/{id}/update', [ClienteLivroController::class, 'update'])->name('emprestimo.update');
+    Route::post('/destroy', [ClienteLivroController::class, 'destroy'])->name('emprestimo.destroy');
 });
 
 Route::prefix('/funcionario')->group(function () {

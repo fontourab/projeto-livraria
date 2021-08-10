@@ -34,7 +34,9 @@
             </a>
         </div>
         <div class="col-4">
-            <button class="btn btn-secondary form-control"> Empréstimos </button>
+            <a href="{{ route('emprestimo.index') }}">
+                <button class="btn btn-secondary form-control"> Empréstimos </button>
+            </a>
         </div>
     </div>
 </div>
