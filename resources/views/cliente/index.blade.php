@@ -90,7 +90,7 @@
                         if (data) {
                             window.location.reload();
                         } else {
-                            alert('Não foi possível excluir este funcionário, tente novamente mais tarde.');
+                            alert('Não foi possível excluir este cliente, tente novamente mais tarde.');
                         }
                     }
                 });

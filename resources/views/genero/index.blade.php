@@ -69,7 +69,7 @@
         $('#tabela tbody').on('click', '#apagar', function () {
             let id = $(this).data('genero');
             let genero = $(this).data('nome');
-            let apagar = confirm('Deseja excluir o genero ' + genero + ' permanentemente?');
+            let apagar = confirm('Deseja excluir o gênero ' + genero + ' permanentemente?');
 
             if (apagar) {
                 $.ajaxSetup({
@@ -86,7 +86,7 @@
                         if (data) {
                             window.location.reload();
                         } else {
-                            alert('Não foi possível excluir este genero, tente novamente mais tarde.');
+                            alert('Não foi possível excluir este gênero, tente novamente mais tarde.');
                         }
                     }
                 });

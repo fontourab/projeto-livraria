@@ -16,7 +16,7 @@
             </a>
         </div>
         <div class="col-8 text-right">
-            <a href="{{ route('cliente.create') }}">
+            <a href="{{ route('livro.create') }}">
                 <button class="btn btn-success"> Cadastrar Livro </button>
             </a>
         </div>
@@ -32,19 +32,22 @@
                     <th> Nome </th>
                     <th> Gênero </th>
                     <th> Autor </th>
-                    <th> Qtd Total </th>
-                    <th> Qtd Atual </th>
-                    <th colspan=2 class="text-center"> Opções </th>
+                    <th class="text-center"> Qtd Total </th>
+                    <th class="text-center"> Qtd Atual </th>
+                    <th colspan=3 class="text-center"> Opções </th>
                 </thead>
                 <tbody>
                     @foreach ($livros as $livro)
                         <tr>
                             <td>{{ $livro->id }}</td>
                             <td>{{ $livro->nome }}</td>
-                            <td>{{ $livro->genero_id }}</td>
-                            <td>{{ $livro->autor_id }}</td>
-                            <td>{{ $livro->quantidade }}</td>
-                            <td>{{ $livro->quantidade_atual }}</td>
+                            <td>{{ $livro->genero }}</td>
+                            <td>{{ $livro->autor }}</td>
+                            <td class="text-center">{{ $livro->quantidade }}</td>
+                            <td class="text-center">{{ $livro->quantidade_atual }}</td>
+                            <td>
+                                <button class="btn btn-info form-control" id="ver" data-livro="{{ $livro->id }}"> Ver </button>
+                            </td>
                             <td>
                                 <button class="btn btn-warning form-control" id="editar" data-livro="{{ $livro->id }}"> Editar </button>
                             </td>
@@ -63,14 +66,19 @@
 <script>
     $(document).ready(function() {
         $('#tabela tbody').on('click', '#editar', function () {
-            let id = $(this).data('cliente');
-            window.location.href = "/cliente/" + id + "/edit";
+            let id = $(this).data('livro');
+            window.location.href = "/livro/" + id + "/edit";
+        });
+
+        $('#tabela tbody').on('click', '#ver', function () {
+            let id = $(this).data('livro');
+            window.location.href = "/livro/" + id + "/show";
         });
 
         $('#tabela tbody').on('click', '#apagar', function () {
-            let id = $(this).data('cliente');
-            let cliente = $(this).data('nome');
-            let apagar = confirm('Deseja excluir o cliente ' + cliente + ' permanentemente?');
+            let id = $(this).data('livro');
+            let livro = $(this).data('nome');
+            let apagar = confirm('Deseja excluir o livro ' + livro + ' permanentemente?');
 
             if (apagar) {
                 $.ajaxSetup({
@@ -79,15 +87,15 @@
                     }
                 });
                 $.post({
-                    url: '/cliente/destroy',
+                    url: '/livro/destroy',
                     data: {
                         'id'    : id
                     },
                     success: function (data) {
                         if (data) {
-                            window.location.reload();
+                            window.location.reload();   
                         } else {
-                            alert('Não foi possível excluir este funcionário, tente novamente mais tarde.');
+                            alert('Não foi possível excluir este livro, tente novamente mais tarde.');
                         }
                     }
                 });
