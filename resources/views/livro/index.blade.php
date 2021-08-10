@@ -1,5 +1,5 @@
 @extends('layouts.model')
-@section('titulo', 'Clientes')
+@section('titulo', 'Livros')
 
 @section('extra-plugins')
     <meta name="csrf-token" content="{{ csrf_token() }}"> 
@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mt-5"> Clientes </h1>
+    <h1 class="mt-5"> Visualizar Livros </h1>
 
     <div class="row mt-5">
         <div class="col-4">
@@ -17,7 +17,7 @@
         </div>
         <div class="col-8 text-right">
             <a href="{{ route('cliente.create') }}">
-                <button class="btn btn-success"> Cadastrar Cliente </button>
+                <button class="btn btn-success"> Cadastrar Livro </button>
             </a>
         </div>
     </div>
@@ -30,25 +30,27 @@
                 <thead>
                     <th> # </th>
                     <th> Nome </th>
-                    <th> RG </th>
-                    <th> Telefone </th>
-                    <th colspan=3 class="text-center"> Opções </th>
+                    <th> Gênero </th>
+                    <th> Autor </th>
+                    <th> Qtd Total </th>
+                    <th> Qtd Atual </th>
+                    <th colspan=2 class="text-center"> Opções </th>
                 </thead>
                 <tbody>
-                    @foreach ($clientes as $cliente)
+                    @foreach ($livros as $livro)
                         <tr>
-                            <td>{{ $cliente->id }}</td>
-                            <td>{{ $cliente->nome }}</td>
-                            <td>{{ $cliente->rg }}</td>
-                            <td>{{ $cliente->telefone }}</td>
+                            <td>{{ $livro->id }}</td>
+                            <td>{{ $livro->nome }}</td>
+                            <td>{{ $livro->genero_id }}</td>
+                            <td>{{ $livro->autor_id }}</td>
+                            <td>{{ $livro->quantidade }}</td>
+                            <td>{{ $livro->quantidade_atual }}</td>
                             <td>
-                                <button class="btn btn-info form-control" id="ver" data-cliente="{{ $cliente->id }}"> Ver </button>
+                                <button class="btn btn-warning form-control" id="editar" data-livro="{{ $livro->id }}"> Editar </button>
                             </td>
                             <td>
-                                <button class="btn btn-warning form-control" id="editar" data-cliente="{{ $cliente->id }}"> Editar </button>
-                            </td>
-                            <td>
-                                <button class="btn btn-outline-danger form-control" id="apagar" data-cliente="{{ $cliente->id }}" data-nome="{{ $cliente->nome }}"> Apagar </button>
+                                <button class="btn btn-outline-danger form-control" id="apagar" data-livro="{{ $livro->id }}" 
+                                    data-nome="{{ $livro->nome }}"> Apagar </button>
                             </td>
                         </tr>
                     @endforeach
@@ -63,11 +65,6 @@
         $('#tabela tbody').on('click', '#editar', function () {
             let id = $(this).data('cliente');
             window.location.href = "/cliente/" + id + "/edit";
-        });
-
-        $('#tabela tbody').on('click', '#ver', function () {
-            let id = $(this).data('cliente');
-            window.location.href = "/cliente/" + id + "/show";
         });
 
         $('#tabela tbody').on('click', '#apagar', function () {

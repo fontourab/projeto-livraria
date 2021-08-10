@@ -31,18 +31,35 @@ class ClienteController extends Controller {
     }
 
     public function show($id) {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view('cliente.show', compact('cliente'));
     }
 
     public function edit($id) {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view('cliente.edit', compact('cliente'));
     }
 
     public function update(Request $request, $id) {
-        //
+        $cliente = Cliente::findOrFail($id);
+        try {
+            $cliente->update($request->all());
+        } catch (PDOException $e) {
+            return $e;
+        }
+        return redirect()->route('cliente.index');
     }
 
-    public function destroy($id) {
-        //
+    public function destroy(Request $request) {
+        $cliente = Cliente::findOrFail($request->id);
+        try {
+            $cliente->delete();
+            $data = 1;
+        } catch (PDOException $e) {
+            return $e;
+            $data = 0;
+        }
+
+        return json_encode($data);
     }
 }

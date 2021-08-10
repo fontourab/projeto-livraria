@@ -1,23 +1,42 @@
 @extends('layouts.model')
+
 @section('content')
-
 <div class="container">
-    <h1> Livraria </h1>
-
+    <h1 class="mt-5"> Livraria </h1>
+    <br>
     <div class="row">
-        <div class="col-3">
+        <div class="col-4">
             <a href="{{ route('cliente.index') }}">
-                <button class="btn btn-primary"> Clientes </button>
+                <button class="btn btn-secondary form-control"> Clientes </button>
             </a> 
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary"> Livros </button>
+        <div class="col-4">
+            <a href="{{ route('funcionario.index') }}">
+                <button class="btn btn-secondary form-control"> Funcionários </button>
+            </a>
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary"> Emprestimos </button>
+        <div class="col-4">
+            <a href="{{ route('genero.index') }}">
+                <button class="btn btn-secondary form-control"> Gêneros </button>
+            </a>
         </div>
-        <div class="col-3">
-            <button class="btn btn-primary"> Funcionários </button>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-4">
+            <a href="{{ route('autor.index') }}">
+                <button class="btn btn-secondary form-control"> Autores </button>
+            </a>
+        </div>
+        <div class="col-4">
+            <a href="{{ route('livro.index') }}">
+                <button class="btn btn-secondary form-control"> Livros </button>
+            </a>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-secondary form-control"> Empréstimos </button>
         </div>
     </div>
 </div>
+
+@endsection
