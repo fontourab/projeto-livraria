@@ -10,6 +10,11 @@ class AutorController extends Controller {
 
     public function index() {
         $autores = Autor::all();
+
+        foreach ($autores as $autor) {
+            $autor->data_nascimento = date('d/m/Y', strtotime($autor->data_nascimento));
+        }
+        
         return view('autor.index', compact('autores'));
     }
 
@@ -24,6 +29,7 @@ class AutorController extends Controller {
                 'data_nascimento' => $request->data_nascimento,
                 'nacionalidade'   => $request->nacionalidade
             ]);
+            
         } catch (PDOException $e) {
             return $e;
         }

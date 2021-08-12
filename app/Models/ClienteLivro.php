@@ -9,7 +9,7 @@ class ClienteLivro extends Model {
     use HasFactory;
 
     protected $table = "cliente_livro";
-    protected $fillable = ['livro_id', 'cliente_id', 'funcionario_id', 'data_devolucaco', 'situacao'];
+    protected $fillable = ['livro_id', 'cliente_id', 'funcionario_id', 'data_devolucao', 'situacao'];
 
     public function livros() {
         return $this->belongsToMany(Livro::class, 'livro_id', 'id')->withTimestamps();

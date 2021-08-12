@@ -19,7 +19,7 @@
             <div class="col-12">
                 <label for=""> Nome: </label>
                 <input type="text" name="nome" id="nome" class="form-control" required> <br>
-                <label for=""> RG: </label>
+                <label for=""> Data de Nascimento: </label>
                 <input type="date" name="data_nascimento" id="data_nascimento" class="form-control" required> <br>
                 <label for=""> Nacionalidade: </label>
                 <input type="text" name="nacionalidade" id="nacionalidade" class="form-control" required>

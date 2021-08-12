@@ -31,18 +31,16 @@
                     <th> # </th>
                     <th> Livro </th>
                     <th> Cliente </th>
-                    <th class="text-center"> Situação </th>
+                    <th> Situação </th>
                     <th colspan=3 class="text-center"> Opções </th>
                 </thead>
                 <tbody>
                     @foreach ($emprestimos as $emprestimo)
                         <tr>
                             <td>{{ $emprestimo->id }}</td>
-                            <td>{{ $emprestimo->nome }}</td>
-                            <td>{{ $emprestimo->genero }}</td>
-                            <td>{{ $emprestimo->autor }}</td>
-                            <td class="text-center">{{ $emprestimo->quantidade }}</td>
-                            <td class="text-center">{{ $emprestimo->quantidade_atual }}</td>
+                            <td>{{ $emprestimo->livro }}</td>
+                            <td>{{ $emprestimo->cliente }}</td>
+                            <td>{{ $emprestimo->situacao_txt }}</td>
                             <td>
                                 <button class="btn btn-info form-control" id="ver" data-emprestimo="{{ $emprestimo->id }}"> Ver </button>
                             </td>
@@ -51,7 +49,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-outline-danger form-control" id="apagar" data-emprestimo="{{ $emprestimo->id }}" 
-                                    data-nome="{{ $emprestimo->nome }}"> Apagar </button>
+                                    data-emprestimo="{{ $emprestimo->id }}"> Apagar </button>
                             </td>
                         </tr>
                     @endforeach
@@ -64,19 +62,18 @@
 <script>
     $(document).ready(function() {
         $('#tabela tbody').on('click', '#editar', function () {
-            let id = $(this).data('livro');
-            window.location.href = "/livro/" + id + "/edit";
+            let id = $(this).data('emprestimo');
+            window.location.href = "/emprestimo/" + id + "/edit";
         });
 
         $('#tabela tbody').on('click', '#ver', function () {
-            let id = $(this).data('livro');
-            window.location.href = "/livro/" + id + "/show";
+            let id = $(this).data('emprestimo');
+            window.location.href = "/emprestimo/" + id + "/show";
         });
 
         $('#tabela tbody').on('click', '#apagar', function () {
-            let id = $(this).data('livro');
-            let livro = $(this).data('nome');
-            let apagar = confirm('Deseja excluir o livro ' + livro + ' permanentemente?');
+            let id = $(this).data('emprestimo');
+            let apagar = confirm('Deseja excluir o empréstimo de número #' + id + ' permanentemente?');
 
             if (apagar) {
                 $.ajaxSetup({
@@ -85,7 +82,7 @@
                     }
                 });
                 $.post({
-                    url: '/livro/destroy',
+                    url: '/emprestimo/destroy',
                     data: {
                         'id'    : id
                     },
@@ -93,7 +90,7 @@
                         if (data) {
                             window.location.reload();   
                         } else {
-                            alert('Não foi possível excluir este livro, tente novamente mais tarde.');
+                            alert('Não foi possível excluir este empréstimo, tente novamente mais tarde.');
                         }
                     }
                 });

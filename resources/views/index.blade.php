@@ -39,6 +39,12 @@
             </a>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div id=imgprincipal>
+            <img src="{!! asset('img/principal.jpg')!!}" />
+        </div>
+    </div>
 </div>
 
 @endsection
