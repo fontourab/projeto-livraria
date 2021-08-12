@@ -23,6 +23,10 @@ class FuncionarioController extends Controller {
                 'matricula' => $request->matricula,
                 'nome'      => $request->nome
             ]);
+            \Session::flash('flash_message', [
+                'msg'   => 'Funcionário criado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -43,6 +47,10 @@ class FuncionarioController extends Controller {
         $funcionario = Funcionario::findOrFail($id);
         try {
             $funcionario->update($request->all());
+            \Session::flash('flash_message', [
+                'msg'   => 'Funcionário editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -54,6 +62,10 @@ class FuncionarioController extends Controller {
         try {
             $funcionario->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Funcionário excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;

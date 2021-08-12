@@ -33,6 +33,10 @@ class LivroController extends Controller {
                 'quantidade'       => $request->quantidade,
                 'quantidade_atual' => $request->quantidade_atual
             ]);
+            \Session::flash('flash_message', [
+                'msg'   => 'Livro criado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -63,6 +67,10 @@ class LivroController extends Controller {
         $livro = Livro::findOrFail($id);
         try {
             $livro->update($request->all());
+            \Session::flash('flash_message', [
+                'msg'   => 'Livro editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -74,6 +82,10 @@ class LivroController extends Controller {
         try {
             $livro->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Livro excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;

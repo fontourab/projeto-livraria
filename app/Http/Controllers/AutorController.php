@@ -29,7 +29,10 @@ class AutorController extends Controller {
                 'data_nascimento' => $request->data_nascimento,
                 'nacionalidade'   => $request->nacionalidade
             ]);
-            
+            \Session::flash('flash_message', [
+                'msg'   => 'Autor criado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -50,6 +53,10 @@ class AutorController extends Controller {
         $autor = Autor::findOrFail($request->id);
         try {
             $autor->update($request->all());
+            \Session::flash('flash_message', [
+                'msg'   => 'Autor editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -61,6 +68,10 @@ class AutorController extends Controller {
         try {
             $autor->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Autor excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;

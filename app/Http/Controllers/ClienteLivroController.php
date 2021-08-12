@@ -26,7 +26,7 @@ class ClienteLivroController extends Controller {
     }
 
     public function create() {
-        $livros  = Livro::all();
+        $livros  = Livro::where('quantidade_atual', '>', 0)->get();
         $clientes = Cliente::all();
         $funcionarios = Funcionario::all();
 
@@ -37,6 +37,9 @@ class ClienteLivroController extends Controller {
         $hoje = date('Y-m-d');
         $novaData = date('Y-m-d', strtotime("+9 days",strtotime($hoje)));
 
+        $livro = Livro::findOrFail($request->livro_id);
+        $qtdNova = $livro->quantidade_atual - 1;
+
         try{
             ClienteLivro::create([
                 'livro_id'       => $request->livro_id,
@@ -44,6 +47,19 @@ class ClienteLivroController extends Controller {
                 'funcionario_id' => $request->funcionario_id,
                 'data_devolucao' => $novaData,
                 'situacao'       => 1
+            ]);
+
+            try {
+                $livro->update([
+                    'quantidade_atual' => $qtdNova
+                ]);
+            } catch (PDOException $e) {
+                return $e;
+            }
+            
+            \Session::flash('flash_message', [
+                'msg'   => 'Empréstimo criado com sucesso!',
+                'class' => 'alert-success'
             ]);
         } catch (PDOException $e) {
             return $e;
@@ -92,8 +108,27 @@ class ClienteLivroController extends Controller {
 
     public function update(Request $request, $id) {
         $emprestimo = ClienteLivro::findOrFail($id);
+
         try {
             $emprestimo->update($request->all());
+
+            if ($request->situacao == '2') {
+                $livro = Livro::findOrFail($request->livro_id);
+                $qtdNova = $livro->quantidade_atual + 1;
+    
+                try {
+                    $livro->update([
+                        'quantidade_atual' => $qtdNova
+                    ]);
+                } catch (PDOException $e) {
+                    return $e;
+                }
+            }
+
+            \Session::flash('flash_message', [
+                'msg'   => 'Empréstimo editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -105,6 +140,10 @@ class ClienteLivroController extends Controller {
         try {
             $emprestimo->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Empréstimo excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;

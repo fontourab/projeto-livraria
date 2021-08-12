@@ -41,8 +41,8 @@
     </div>
     <br>
     <div class="row">
-        <div id=imgprincipal>
-            <img src="{!! asset('img/principal.jpg')!!}" />
+        <div class="col-12 text-center">
+            <img class="img-fluid" src="{!! asset('img/principal.jpg')!!}" />
         </div>
     </div>
 </div>

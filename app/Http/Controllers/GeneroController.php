@@ -22,6 +22,10 @@ class GeneroController extends Controller {
             Genero::create([
                 'nome'      => $request->nome
             ]);
+            \Session::flash('flash_message', [
+                'msg'   => 'Gênero criado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -42,6 +46,10 @@ class GeneroController extends Controller {
         $genero = Genero::findOrFail($id);
         try {
             $genero->update($request->all());
+            \Session::flash('flash_message', [
+                'msg'   => 'Gênero editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -53,6 +61,10 @@ class GeneroController extends Controller {
         try {
             $genero->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Gênero excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;

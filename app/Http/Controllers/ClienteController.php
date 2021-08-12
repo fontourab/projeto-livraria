@@ -24,6 +24,10 @@ class ClienteController extends Controller {
                 'rg'       => $request->rg,
                 'telefone' => $request->telefone
             ]);
+            \Session::flash('flash_message', [
+                'msg'   => 'Cliente criado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -44,6 +48,10 @@ class ClienteController extends Controller {
         $cliente = Cliente::findOrFail($id);
         try {
             $cliente->update($request->all());
+            \Session::flash('flash_message', [
+                'msg'   => 'Cliente editado com sucesso!',
+                'class' => 'alert-success'
+            ]);
         } catch (PDOException $e) {
             return $e;
         }
@@ -55,6 +63,10 @@ class ClienteController extends Controller {
         try {
             $cliente->delete();
             $data = 1;
+            \Session::flash('flash_message', [
+                'msg'   => 'Cliente excluído com sucesso!',
+                'class' => 'alert-danger'
+            ]);
         } catch (PDOException $e) {
             return $e;
             $data = 0;
